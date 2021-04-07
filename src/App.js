@@ -1,23 +1,57 @@
-import logo from './logo.svg';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import './App.css';
+import Product from "./components/Product";
 
 function App() {
+  let products = [
+    {
+      id: 1,
+      name: "iPhone 11 Pro Max 64GB",
+      price: "2099000000",
+      image: "https://didongviet.vn/pub/media/catalog/product//9/9/99-min.jpg",
+      status: true
+    },
+    {
+      id: 2,
+      name: "iPhone 11 256GB",
+      price: "1859000000",
+      image: "https://didongviet.vn/pub/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/i/p/iphone-11-tim_2.jpg",
+      status: false
+    },
+    {
+      id: 3,
+      name: "iPhone 12 Mini 64GB",
+      price: "2159000000",
+      image: "https://didongviet.vn/pub/media/catalog/product//i/p/iphone-12-mini-128gb_3.jpg",
+      status: true
+    }
+  ]
+
+  let productElements = products.map((p, index ) => {
+                                  return (
+                                    p.status && 
+                                    <Product
+                                      key={ index }
+                                      price={ p.price }
+                                      image={ p.image }
+                                      >
+                                        { p.name }
+                                    </Product>
+                                  )
+                                });
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a className="navbar-brand">Props</a>
+        <button className="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon" />
+        </button>
+      </nav>
+      <div className="container">
+        <div className="row mt-5">
+            { productElements }
+        </div>
+      </div>
     </div>
   );
 }
