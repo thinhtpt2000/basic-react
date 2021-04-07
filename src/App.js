@@ -27,18 +27,22 @@ function App() {
     }
   ]
 
-  let productElements = products.map((p, index ) => {
-                                  return (
-                                    p.status && 
-                                    <Product
-                                      key={ index }
-                                      price={ p.price }
-                                      image={ p.image }
-                                      >
-                                        { p.name }
-                                    </Product>
-                                  )
-                                });
+  let productElements = products.map((p, index) => {
+    return (
+      p.status &&
+      <Product
+        key={index}
+        price={p.price}
+        image={p.image}
+      >
+        {p.name}
+      </Product>
+    )
+  });
+
+  const onClickBtn = () => {
+    console.log('This is app component');
+  }
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -49,7 +53,12 @@ function App() {
       </nav>
       <div className="container">
         <div className="row mt-5">
-            { productElements }
+          {productElements}
+        </div>
+        <div className="row mt-5">
+          <button className="btn btn-warning" onClick={onClickBtn}>
+            Click Me !
+            </button>
         </div>
       </div>
     </div>
