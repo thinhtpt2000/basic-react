@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useRef } from 'react';
 import './App.css';
 import Product from "./components/Product";
 
 function App() {
+  const pName = useRef(null);
+
   let products = [
     {
       id: 1,
@@ -43,6 +46,11 @@ function App() {
   const onClickBtn = () => {
     console.log('This is app component');
   }
+
+  const onAddProduct = () => {
+    console.log(pName.current.value);
+  }
+
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -52,6 +60,15 @@ function App() {
         </button>
       </nav>
       <div className="container">
+        <div className="row mt-5">
+          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div className="form-group">
+              <label htmlFor="name">Product name</label>
+              <input type="text" className="form-control" id="name" ref={pName}/>
+            </div>
+            <button type="submit" className="btn btn-primary" onClick={onAddProduct}>Save</button>
+          </div>
+        </div>
         <div className="row mt-5">
           {productElements}
         </div>
