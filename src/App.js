@@ -22,6 +22,11 @@ function App() {
     }
   }
 
+  const onResetFormat = () => {
+    setColor('red');
+    setFontSize(20);
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -30,7 +35,7 @@ function App() {
           <SizeSetting fontSize={fontSize} onReceiveSize={onSetSize}/>
         </div>
         <div className="row mt-2">
-          <Reset />
+          <Reset onClickReset={onResetFormat}/>
         </div>
         <div className="row mt-5">
           <Result color={color} size={fontSize}/>
