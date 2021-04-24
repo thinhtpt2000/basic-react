@@ -4,6 +4,7 @@ import ColorPicker from "./components/ColorPicker";
 import SizeSetting from "./components/SizeSetting";
 import Reset from "./components/Reset";
 import Result from "./components/Result";
+import AppConstant from "./utils/AppConstant";
 
 function App() {
 
@@ -16,15 +17,15 @@ function App() {
 
   const onSetSize = (isInc) => {
     if (isInc) {
-      setFontSize(fontSize + 1 > 36 ? fontSize : fontSize + 1);
+      setFontSize(fontSize + 1 > AppConstant.MAX_FONT_SIZE ? fontSize : fontSize + 1);
     } else {
-      setFontSize(fontSize - 1 < 12 ? fontSize : fontSize - 1);
+      setFontSize(fontSize - 1 < AppConstant.MIN_FONT_SIZE ? fontSize : fontSize - 1);
     }
   }
 
   const onResetFormat = () => {
-    setColor('red');
-    setFontSize(20);
+    setColor(AppConstant.DEFAULT_COLOR);
+    setFontSize(AppConstant.DEFAULT_FONT_SIZE);
   }
 
   return (
