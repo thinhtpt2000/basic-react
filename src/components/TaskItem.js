@@ -7,16 +7,16 @@ function TaskItem() {
                 <span className="badge badge-primary">Inactive</span>
             </td>
             <td>
-                <button type="button" className="btn btn-warning mr-2">
+                <button type="button" className="btn btn-warning mx-2 my-1">
                     <i className="fas fa-edit"></i>
-                        &nbsp;
-                        Edit
-                    </button>
-                <button type="button" className="btn btn-danger ml-2">
+                    &nbsp;
+                    Edit
+                </button>
+                <button type="button" className="btn btn-danger mx-2 my-1">
                     <i className="fas fa-trash-alt"></i>
-                        &nbsp;
-                        Delete
-                    </button>
+                    &nbsp;
+                    Delete
+                </button>
             </td>
         </tr>
     )

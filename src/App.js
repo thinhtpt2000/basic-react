@@ -20,7 +20,7 @@ function App() {
           <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <button type="submit" className="btn btn-primary mr-2">
+                <button type="submit" className="btn btn-primary mt-2">
                   <i className="fas fa-plus"></i>
                   &nbsp;
                   Add new task

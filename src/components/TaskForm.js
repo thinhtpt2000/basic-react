@@ -23,12 +23,12 @@ function TaskForm() {
                                 <option value={0}>Inactive</option>
                             </select>
                         </div>
-                        <button type="submit" className="btn btn-primary mr-2">
+                        <button type="submit" className="btn btn-primary mx-2 my-1">
                             <i className="fas fa-plus"></i>
                             &nbsp;
                             Save
                         </button>
-                        <button type="reset" className="btn btn-danger ml-2">
+                        <button type="reset" className="btn btn-danger mx-2 my-1">
                             <i className="fas fa-times"></i>
                             &nbsp;
                             Reset
