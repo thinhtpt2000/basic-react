@@ -1,6 +1,36 @@
 import "./TaskForm.css";
+import { useState } from "react";
 
 function TaskForm(props) {
+    const [data, setData] = useState({
+        txtName: "",
+        sltStatus: 1
+    });
+
+    const onChangeData = (event) => {
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        setData({
+            ...data,
+            [name]: value
+        });
+    }
+
+    const onSubmitForm = (event) => {
+        event.preventDefault();
+        props.handleAddData(data.txtName, data.sltStatus === 1);
+        onClearForm();
+        props.handleCloseForm();
+    }
+
+    const onClearForm = () => {
+        setData({
+            txtName: "",
+            sltStatus: 1
+        });
+    }
+
     return (
         <div className="TaskForm">
             <div className="card">
@@ -8,19 +38,32 @@ function TaskForm(props) {
                     <div className="row">
                         <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">Add new task</div>
                         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
-                            <i className="fas fa-times-circle btn-close" onClick={() => props.hanldeCloseForm()}></i>
+                            <i className="fas fa-times-circle btn-close" onClick={() => props.handleCloseForm()}></i>
                         </div>
                     </div>
                 </div>
                 <div className="card-body">
-                    <form>
+                    <form onSubmit={onSubmitForm}>
                         <div className="form-group">
                             <label className="font-weight-bold" htmlFor="txtName">Name</label>
-                            <input type="text" className="form-control" id="txtName" name="txtName" />
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="txtName"
+                                name="txtName"
+                                value={data.txtName}
+                                onChange={onChangeData}
+                            />
                         </div>
                         <div className="form-group">
                             <label className="font-weight-bold" htmlFor="sltStatus">Status</label>
-                            <select className="form-control" id="sltStatus" name="sltStatus">
+                            <select
+                                className="form-control"
+                                id="sltStatus"
+                                name="sltStatus"
+                                value={data.sltStatus}
+                                onChange={onChangeData}
+                            >
                                 <option value={1}>Active</option>
                                 <option value={0}>Inactive</option>
                             </select>
@@ -30,7 +73,7 @@ function TaskForm(props) {
                             &nbsp;
                             Save
                         </button>
-                        <button type="reset" className="btn btn-danger mx-2 my-1">
+                        <button type="reset" className="btn btn-danger mx-2 my-1" onClick={() => onClearForm()}>
                             <i className="fas fa-times"></i>
                             &nbsp;
                             Reset

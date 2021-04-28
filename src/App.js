@@ -49,6 +49,19 @@ function App() {
     setIsDisplayForm(false);
   }
 
+  const onAddNewTask = (name, status) => {
+    let tmpTasks = [
+      ...tasks,
+      {
+        id: generateId(),
+        name: name,
+        status: status
+      }
+    ];
+    setTasks(tmpTasks);
+    localStorage.setItem('tasks', JSON.stringify(tmpTasks));
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -62,7 +75,10 @@ function App() {
           {
             isDisplayForm &&
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-              <TaskForm hanldeCloseForm={onCloseForm}/>
+              <TaskForm
+                handleCloseForm={onCloseForm}
+                handleAddData={onAddNewTask}
+              />
             </div>
           }
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
