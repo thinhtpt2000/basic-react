@@ -35,6 +35,7 @@ function TaskList(props) {
                                         data={task} 
                                         handleUpdateStatus={props.handleUpdateStatus}
                                         handleDeleteTask={props.handleDeleteTask}
+                                        handeClickUpdate={props.handeClickUpdate}
                                         />
                         })
                     }

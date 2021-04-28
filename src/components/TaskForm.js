@@ -1,11 +1,26 @@
 import "./TaskForm.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function TaskForm(props) {
     const [data, setData] = useState({
+        id: "",
         txtName: "",
-        sltStatus: 1
+        sltStatus: "1"
     });
+
+    useEffect(() => {
+        let updatingData = props.data;
+        updatingData = updatingData ? updatingData : {
+                id: "",
+                name: "",
+                status: true
+        };
+        setData({
+            id: updatingData.id,
+            txtName: updatingData.name,
+            sltStatus: updatingData.status ? "1" : "0"
+        });
+    }, [props.data]);
 
     const onChangeData = (event) => {
         let target = event.target;
@@ -19,15 +34,18 @@ function TaskForm(props) {
 
     const onSubmitForm = (event) => {
         event.preventDefault();
-        props.handleAddData(data.txtName, data.sltStatus === 1);
+        let submitData = data;
+        submitData.sltStatus = submitData.sltStatus === "1";
+        props.handleSubmitForm(submitData);
         onClearForm();
         props.handleCloseForm();
     }
 
     const onClearForm = () => {
         setData({
+            id: "",
             txtName: "",
-            sltStatus: 1
+            sltStatus: "1"
         });
     }
 
@@ -36,7 +54,7 @@ function TaskForm(props) {
             <div className="card">
                 <div className="card-header bg-success text-light font-weight-bold">
                     <div className="row">
-                        <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">Add new task</div>
+                        <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">{data.id !== "" ? "Update" : "Add"} new task</div>
                         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
                             <i className="fas fa-times-circle btn-close" onClick={() => props.handleCloseForm()}></i>
                         </div>
@@ -64,8 +82,8 @@ function TaskForm(props) {
                                 value={data.sltStatus}
                                 onChange={onChangeData}
                             >
-                                <option value={1}>Active</option>
-                                <option value={0}>Inactive</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                         </div>
                         <button type="submit" className="btn btn-primary mx-2 my-1">

@@ -7,6 +7,7 @@ import TaskList from "./components/TaskList";
 function App() {
   const [tasks, setTasks] = useState([]); // {id: unique, name, status}
   const [isDisplayForm, setIsDisplayForm] = useState(false);
+  const [updatingTask, setUpdatingTask] = useState(null);
 
   useEffect(() => {
     if (localStorage && localStorage.getItem('tasks')) {
@@ -42,22 +43,33 @@ function App() {
   const generateId = () => randomId() + '-' + randomId() + '-' + randomId() + '-' + randomId();
 
   const onToggleForm = () => {
-    setIsDisplayForm(!isDisplayForm);
+    setIsDisplayForm(true);
+    setUpdatingTask(null);
   }
 
   const onCloseForm = () => {
     setIsDisplayForm(false);
+    setUpdatingTask(null);
   }
 
-  const onAddNewTask = (name, status) => {
-    let tmpTasks = [
-      ...tasks,
-      {
+  const onSubmitData = (data) => {
+    let tmpTasks = [];
+    if (data.id === "") {
+      tmpTasks = tasks;
+      tmpTasks.push({
         id: generateId(),
-        name: name,
-        status: status
-      }
-    ];
+        name: data.txtName,
+        status: data.sltStatus
+      });
+    } else {
+      tmpTasks = tasks.map((task) => {
+        if (task.id === data.id) {
+          task.name = data.txtName;
+          task.status = data.sltStatus;
+        }
+        return task;
+      });
+    }
     setTasks(tmpTasks);
     localStorage.setItem('tasks', JSON.stringify(tmpTasks));
   }
@@ -82,6 +94,18 @@ function App() {
     onCloseForm();
   }
 
+  const onUpdateTask = (id) => {
+    let tmpTask = tasks.filter((task) => {
+      return task.id === id;
+    })[0];
+    setUpdatingTask(tmpTask);
+    onShowForm();
+  }
+
+  const onShowForm = () => {
+    setIsDisplayForm(true);
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -97,7 +121,8 @@ function App() {
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
               <TaskForm
                 handleCloseForm={onCloseForm}
-                handleAddData={onAddNewTask}
+                handleSubmitForm={onSubmitData}
+                data={updatingTask}
               />
             </div>
           }
@@ -121,11 +146,12 @@ function App() {
             </div>
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TaskList 
-                  data={tasks} 
+                <TaskList
+                  data={tasks}
                   handleUpdateStatus={onUpdateStatus}
                   handleDeleteTask={onDeleteTask}
-                  />
+                  handeClickUpdate={onUpdateTask}
+                />
               </div>
             </div>
           </div>
