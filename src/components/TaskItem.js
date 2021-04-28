@@ -1,5 +1,9 @@
 function TaskItem(props) {
     let {data, order} = props;
+
+    const onUpdateStatus = () => {
+        props.handleUpdateStatus(props.data.id);
+    }
     return (
         <tr>
             <th scope="row" className="align-middle">{order}</th>
@@ -7,8 +11,8 @@ function TaskItem(props) {
             <td className="align-middle text-center">
                 {
                     data.status ?  
-                        <span className="badge badge-danger">Active</span> : 
-                        <span className="badge badge-primary">Inactive</span>
+                        <span className="badge badge-danger" onClick={() => onUpdateStatus()}>Active</span> : 
+                        <span className="badge badge-primary" onClick={() => onUpdateStatus()}>Inactive</span>
                 }
             </td>
             <td>

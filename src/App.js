@@ -62,6 +62,17 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(tmpTasks));
   }
 
+  const onUpdateStatus = (id) => {
+    let newTasks = tasks.map((task) => {
+      if (task.id === id) {
+        task.status = !task.status;
+      }
+      return task;
+    });
+    setTasks(newTasks);
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -101,7 +112,10 @@ function App() {
             </div>
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TaskList data={tasks} />
+                <TaskList 
+                  data={tasks} 
+                  handleUpdateStatus={onUpdateStatus}
+                  />
               </div>
             </div>
           </div>

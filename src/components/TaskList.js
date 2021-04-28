@@ -29,7 +29,12 @@ function TaskList(props) {
                     </tr>
                     {
                         props.data.map((task, index) => {
-                            return <TaskItem key={index} order={index + 1} data={task} />
+                            return <TaskItem 
+                                        key={task.id} 
+                                        order={index + 1} 
+                                        data={task} 
+                                        handleUpdateStatus={props.handleUpdateStatus}
+                                        />
                         })
                     }
                 </tbody>
