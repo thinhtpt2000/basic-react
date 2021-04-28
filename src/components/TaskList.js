@@ -34,6 +34,7 @@ function TaskList(props) {
                                         order={index + 1} 
                                         data={task} 
                                         handleUpdateStatus={props.handleUpdateStatus}
+                                        handleDeleteTask={props.handleDeleteTask}
                                         />
                         })
                     }

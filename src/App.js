@@ -73,6 +73,14 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
+  const onDeleteTask = (id) => {
+    let newTasks = tasks.filter((task) => {
+      return task.id !== id;
+    });
+    setTasks(newTasks);
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -115,6 +123,7 @@ function App() {
                 <TaskList 
                   data={tasks} 
                   handleUpdateStatus={onUpdateStatus}
+                  handleDeleteTask={onDeleteTask}
                   />
               </div>
             </div>

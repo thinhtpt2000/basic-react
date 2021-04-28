@@ -4,6 +4,11 @@ function TaskItem(props) {
     const onUpdateStatus = () => {
         props.handleUpdateStatus(props.data.id);
     }
+
+    const onDeleteTask = () => {
+        props.handleDeleteTask(props.data.id);
+    }
+
     return (
         <tr>
             <th scope="row" className="align-middle">{order}</th>
@@ -21,7 +26,7 @@ function TaskItem(props) {
                     &nbsp;
                     Edit
                 </button>
-                <button type="button" className="btn btn-danger mx-2 my-1">
+                <button type="button" className="btn btn-danger mx-2 my-1" onClick={() => onDeleteTask()}>
                     <i className="fas fa-trash-alt"></i>
                     &nbsp;
                     Delete
