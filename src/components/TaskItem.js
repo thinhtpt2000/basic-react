@@ -1,10 +1,15 @@
-function TaskItem() {
+function TaskItem(props) {
+    let {data, order} = props;
     return (
         <tr>
-            <th scope="row" className="align-middle">1</th>
-            <td className="align-middle">Learn Angular</td>
+            <th scope="row" className="align-middle">{order}</th>
+            <td className="align-middle">{data.name}</td>
             <td className="align-middle text-center">
-                <span className="badge badge-primary">Inactive</span>
+                {
+                    data.status ?  
+                        <span className="badge badge-danger">Active</span> : 
+                        <span className="badge badge-primary">Inactive</span>
+                }
             </td>
             <td>
                 <button type="button" className="btn btn-warning mx-2 my-1">

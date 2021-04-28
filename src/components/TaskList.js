@@ -1,6 +1,6 @@
 import TaskItem from "./TaskItem";
 
-function TaskList() {
+function TaskList(props) {
     return (
         <div className="TaskList">
             <table className="table table-bordered">
@@ -27,9 +27,11 @@ function TaskList() {
                         </td>
                         <td></td>
                     </tr>
-                    <TaskItem />
-                    <TaskItem />
-                    <TaskItem />
+                    {
+                        props.data.map((task, index) => {
+                            return <TaskItem key={index} order={index + 1} data={task} />
+                        })
+                    }
                 </tbody>
             </table>
         </div>
