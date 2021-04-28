@@ -1,4 +1,6 @@
-function TaskForm() {
+import "./TaskForm.css";
+
+function TaskForm(props) {
     return (
         <div className="TaskForm">
             <div className="card">
@@ -6,7 +8,7 @@ function TaskForm() {
                     <div className="row">
                         <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">Add new task</div>
                         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
-                            <i className="fas fa-times-circle"></i>
+                            <i className="fas fa-times-circle btn-close" onClick={() => props.hanldeCloseForm()}></i>
                         </div>
                     </div>
                 </div>
