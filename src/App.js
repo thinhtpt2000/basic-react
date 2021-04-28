@@ -79,6 +79,7 @@ function App() {
     });
     setTasks(newTasks);
     localStorage.setItem('tasks', JSON.stringify(newTasks));
+    onCloseForm();
   }
 
   return (
