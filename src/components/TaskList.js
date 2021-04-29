@@ -1,6 +1,24 @@
 import TaskItem from "./TaskItem";
+import { useState } from "react";
 
 function TaskList(props) {
+    const [filters, setFilters] = useState({
+        txtSearchTb: "",
+        sltStatus: 2
+    });
+
+    const onFilterChange = (event) => {
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        let tmpFilter = {
+            ...filters,
+            [name]: value
+        }
+        setFilters(tmpFilter);
+        props.handleFilter(tmpFilter.txtSearchTb, tmpFilter.sltStatus);
+    }
+
     return (
         <div className="TaskList">
             <table className="table table-bordered">
@@ -16,10 +34,23 @@ function TaskList(props) {
                     <tr>
                         <th scope="row"></th>
                         <td>
-                            <input type="text" className="form-control" id="txtSearchTb" name="txtSearchTb" />
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="txtSearchTb" 
+                                name="txtSearchTb" 
+                                value={filters.txtSearchTb}
+                                onChange={onFilterChange}
+                                />
                         </td>
                         <td>
-                            <select className="form-control" id="sltStatus" name="sltStatus">
+                            <select 
+                                className="form-control" 
+                                id="sltStatus" 
+                                name="sltStatus"
+                                value={filters.sltStatus}
+                                onChange={onFilterChange}
+                                >
                                 <option value={2}>All</option>
                                 <option value={1}>Active</option>
                                 <option value={0}>Inactive</option>

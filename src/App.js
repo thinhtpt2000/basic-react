@@ -8,13 +8,25 @@ function App() {
   const [tasks, setTasks] = useState([]); // {id: unique, name, status}
   const [isDisplayForm, setIsDisplayForm] = useState(false);
   const [updatingTask, setUpdatingTask] = useState(null);
+  const [filters, setFilters] = useState({
+    name: "",
+    status: 2
+  });
+  const [filterTasks, setFilterTasks] = useState([]);
 
   useEffect(() => {
     if (localStorage && localStorage.getItem('tasks')) {
       let tmpTasks = JSON.parse(localStorage.getItem('tasks'));
       setTasks(tmpTasks);
+      setFilterTasks(tmpTasks);
     }
   }, []);
+
+  useEffect(() => {
+    if (tasks) {
+      onFilter();
+    }
+  }, [tasks]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const generateData = () => {
     let demoTasks = [
@@ -106,6 +118,25 @@ function App() {
     setIsDisplayForm(true);
   }
 
+  const onFilter = (filterName, filterStatus) => {
+    filterStatus = parseInt(filterStatus || filters.status);
+    filterName = (filterName === undefined ? filters.name : filterName).toLowerCase();
+    let newTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (filterName !== "") {
+      newTasks = newTasks.filter((task) => task.name.toLowerCase().indexOf(filterName) !== -1);
+    }
+    newTasks = newTasks.filter((task) => 
+                              filterStatus === 2 
+                              || (filterStatus === 1 && task.status) 
+                              || (filterStatus === 0 && !task.status)
+                            );
+    setFilterTasks(newTasks);
+    setFilters({
+      name: filterName,
+      status: filterStatus
+    });
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -147,10 +178,11 @@ function App() {
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskList
-                  data={tasks}
+                  data={filterTasks}
                   handleUpdateStatus={onUpdateStatus}
                   handleDeleteTask={onDeleteTask}
                   handeClickUpdate={onUpdateTask}
+                  handleFilter={onFilter}
                 />
               </div>
             </div>
