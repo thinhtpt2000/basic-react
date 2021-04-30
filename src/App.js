@@ -137,6 +137,15 @@ function App() {
     });
   }
 
+  const onSearch = (value) => {
+    if (value !== "") {
+      let newTasks = tasks.filter((task) => task.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+      setFilterTasks(newTasks);
+    } else {
+      setFilterTasks(tasks);
+    }
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -172,7 +181,7 @@ function App() {
             </div>
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <Toolbar />
+                <Toolbar handleSearch={onSearch}/>
               </div>
             </div>
             <div className="row mt-2">
