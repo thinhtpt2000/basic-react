@@ -82,7 +82,7 @@ function App() {
         return task;
       });
     }
-    setTasks(tmpTasks);
+    setTasks([...tmpTasks]);
     localStorage.setItem('tasks', JSON.stringify(tmpTasks));
   }
 
@@ -125,11 +125,11 @@ function App() {
     if (filterName !== "") {
       newTasks = newTasks.filter((task) => task.name.toLowerCase().indexOf(filterName) !== -1);
     }
-    newTasks = newTasks.filter((task) => 
-                              filterStatus === 2 
-                              || (filterStatus === 1 && task.status) 
-                              || (filterStatus === 0 && !task.status)
-                            );
+    newTasks = newTasks.filter((task) =>
+      filterStatus === 2
+      || (filterStatus === 1 && task.status)
+      || (filterStatus === 0 && !task.status)
+    );
     setFilterTasks(newTasks);
     setFilters({
       name: filterName,
@@ -144,6 +144,32 @@ function App() {
     } else {
       setFilterTasks(tasks);
     }
+  }
+
+  const onSort = (sortBy, sortValue) => {
+    let newTasks = filterTasks;
+    if (sortBy === 'name') {
+      newTasks.sort((a, b) => {
+        if (a.name > b.name) {
+          return sortValue;
+        } else if (a.name < b.name) {
+          return -sortValue;
+        } else {
+          return 0;
+        }
+      });
+    } else {
+      newTasks.sort((a, b) => {
+        if (a.status > b.status) {
+          return -sortValue;
+        } else if (a.status < b.status) {
+          return sortValue;
+        } else {
+          return 0;
+        }
+      });
+    }
+    setFilterTasks([...newTasks]);
   }
 
   return (
@@ -181,7 +207,10 @@ function App() {
             </div>
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <Toolbar handleSearch={onSearch}/>
+                <Toolbar
+                  handleSearch={onSearch}
+                  handleSort={onSort}
+                />
               </div>
             </div>
             <div className="row mt-2">

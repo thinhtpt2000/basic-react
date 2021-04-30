@@ -6,7 +6,7 @@ function Toolbar(props) {
         <div className="Toolbar">
             <div className="row mt-2">
                 <Search handleSearch={props.handleSearch} />
-                <Sort />
+                <Sort handleSort={props.handleSort} />
             </div>
         </div>
     );
