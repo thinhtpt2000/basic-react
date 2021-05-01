@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from "react";
-import "./Sort.css";
+import "./TaskSort.css";
 
-function Sort(props) {
+function TaskSort(props) {
     const [sort, setSort] = useState({
         name: "",
         value: 0
@@ -20,7 +20,7 @@ function Sort(props) {
     return (
         <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div className="btn-group">
-                <button type="button" className="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" className="btn btn-light text-primary border dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sort
                     </button>
                 <div className="dropdown-menu">
@@ -43,4 +43,4 @@ function Sort(props) {
     )
 }
 
-export default Sort;
+export default TaskSort;

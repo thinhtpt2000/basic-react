@@ -34,23 +34,23 @@ function TaskList(props) {
                     <tr>
                         <th scope="row"></th>
                         <td>
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                id="txtSearchTb" 
-                                name="txtSearchTb" 
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="txtSearchTb"
+                                name="txtSearchTb"
                                 value={filters.txtSearchTb}
                                 onChange={onFilterChange}
-                                />
+                            />
                         </td>
                         <td>
-                            <select 
-                                className="form-control" 
-                                id="sltStatus" 
+                            <select
+                                className="form-control"
+                                id="sltStatus"
                                 name="sltStatus"
                                 value={filters.sltStatus}
                                 onChange={onFilterChange}
-                                >
+                            >
                                 <option value={2}>All</option>
                                 <option value={1}>Active</option>
                                 <option value={0}>Inactive</option>
@@ -60,14 +60,14 @@ function TaskList(props) {
                     </tr>
                     {
                         props.data.map((task, index) => {
-                            return <TaskItem 
-                                        key={task.id} 
-                                        order={index + 1} 
-                                        data={task} 
-                                        handleUpdateStatus={props.handleUpdateStatus}
-                                        handleDeleteTask={props.handleDeleteTask}
-                                        handeClickUpdate={props.handeClickUpdate}
-                                        />
+                            return <TaskItem
+                                key={task.id}
+                                order={index + 1}
+                                data={task}
+                                handleUpdateStatus={props.handleUpdateStatus}
+                                handleDeleteTask={props.handleDeleteTask}
+                                handleClickUpdate={props.handleClickUpdate}
+                            />
                         })
                     }
                 </tbody>

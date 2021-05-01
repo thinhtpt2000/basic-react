@@ -1,5 +1,5 @@
 function TaskItem(props) {
-    let {data, order} = props;
+    let { data, order } = props;
 
     const onUpdateStatus = () => {
         props.handleUpdateStatus(props.data.id);
@@ -10,7 +10,7 @@ function TaskItem(props) {
     }
 
     const onClickUpdate = () => {
-        props.handeClickUpdate(props.data.id);
+        props.handleClickUpdate(props.data.id);
     }
 
     return (
@@ -19,13 +19,13 @@ function TaskItem(props) {
             <td className="align-middle">{data.name}</td>
             <td className="align-middle text-center">
                 {
-                    data.status ?  
-                        <span className="badge badge-danger" onClick={() => onUpdateStatus()}>Active</span> : 
-                        <span className="badge badge-primary" onClick={() => onUpdateStatus()}>Inactive</span>
+                    data.status ?
+                        <span className="badge badge-danger" onClick={() => onUpdateStatus()}>Active</span> :
+                        <span className="badge badge-success" onClick={() => onUpdateStatus()}>Inactive</span>
                 }
             </td>
             <td>
-                <button type="button" className="btn btn-warning mx-2 my-1" onClick={() => onClickUpdate()}>
+                <button type="button" className="btn btn-primary mx-2 my-1" onClick={() => onClickUpdate()}>
                     <i className="fas fa-edit"></i>
                     &nbsp;
                     Edit

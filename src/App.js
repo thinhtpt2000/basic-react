@@ -1,9 +1,9 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import TaskForm from "./components/TaskForm";
-import Toolbar from "./components/Toolbar";
+import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
-import { findIndex, filter} from "lodash";
+import { findIndex, filter } from "lodash";
 
 function App() {
   const [tasks, setTasks] = useState([]); // {id: unique, name, status}
@@ -28,28 +28,6 @@ function App() {
       onFilter();
     }
   }, [tasks]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const generateData = () => {
-    let demoTasks = [
-      {
-        id: generateId(),
-        name: 'Learn ReactJS',
-        status: true
-      },
-      {
-        id: generateId(),
-        name: 'Working from home',
-        status: false
-      },
-      {
-        id: generateId(),
-        name: 'Coffee time',
-        status: true
-      },
-    ];
-    setTasks(demoTasks);
-    localStorage.setItem('tasks', JSON.stringify(demoTasks));
-  }
 
   const randomId = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 
@@ -200,14 +178,11 @@ function App() {
                   &nbsp;
                   Add new task
                 </button>
-                <button type="button" className="btn btn-warning mt-2 ml-2" onClick={() => generateData()}>
-                  Generate data
-                </button>
               </div>
             </div>
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <Toolbar
+                <TaskControl
                   handleSearch={onSearch}
                   handleSort={onSort}
                 />
@@ -219,7 +194,7 @@ function App() {
                   data={filterTasks}
                   handleUpdateStatus={onUpdateStatus}
                   handleDeleteTask={onDeleteTask}
-                  handeClickUpdate={onUpdateTask}
+                  handleClickUpdate={onUpdateTask}
                   handleFilter={onFilter}
                 />
               </div>

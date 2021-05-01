@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Search(props) {
+function TaskSearch(props) {
     const [keyword, setKeyword] = useState("");
 
     const onChange = (event) => {
@@ -46,4 +46,4 @@ function Search(props) {
     )
 }
 
-export default Search;
+export default TaskSearch;

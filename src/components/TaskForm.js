@@ -11,9 +11,9 @@ function TaskForm(props) {
     useEffect(() => {
         let updatingData = props.data;
         updatingData = updatingData ? updatingData : {
-                id: "",
-                name: "",
-                status: true
+            id: "",
+            name: "",
+            status: true
         };
         setData({
             id: updatingData.id,
@@ -52,7 +52,7 @@ function TaskForm(props) {
     return (
         <div className="TaskForm">
             <div className="card">
-                <div className="card-header bg-success text-light font-weight-bold">
+                <div className="card-header bg-dark text-light font-weight-bold">
                     <div className="row">
                         <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">{data.id !== "" ? "Update" : "Add"} new task</div>
                         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
