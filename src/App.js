@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import TaskForm from "./components/TaskForm";
 import Toolbar from "./components/Toolbar";
 import TaskList from "./components/TaskList";
+import { findIndex, filter} from "lodash";
 
 function App() {
   const [tasks, setTasks] = useState([]); // {id: unique, name, status}
@@ -87,13 +88,12 @@ function App() {
   }
 
   const onUpdateStatus = (id) => {
-    let newTasks = tasks.map((task) => {
-      if (task.id === id) {
-        task.status = !task.status;
-      }
-      return task;
-    });
-    setTasks(newTasks);
+    let newTasks = tasks;
+    let index = findIndex(newTasks, (task) => task.id === id);
+    if (index !== -1) {
+      newTasks[index].status = !newTasks[index].status;
+    }
+    setTasks([...newTasks]);
     localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
@@ -121,16 +121,16 @@ function App() {
   const onFilter = (filterName, filterStatus) => {
     filterStatus = parseInt(filterStatus || filters.status);
     filterName = (filterName === undefined ? filters.name : filterName).toLowerCase();
-    let newTasks = JSON.parse(localStorage.getItem('tasks'));
+    let newTasks = tasks;
     if (filterName !== "") {
-      newTasks = newTasks.filter((task) => task.name.toLowerCase().indexOf(filterName) !== -1);
+      newTasks = filter(newTasks, (task) => task.name.toLowerCase().indexOf(filterName) !== -1);
     }
-    newTasks = newTasks.filter((task) =>
+    newTasks = filter(newTasks, (task) =>
       filterStatus === 2
       || (filterStatus === 1 && task.status)
       || (filterStatus === 0 && !task.status)
     );
-    setFilterTasks(newTasks);
+    setFilterTasks([...newTasks]);
     setFilters({
       name: filterName,
       status: filterStatus
