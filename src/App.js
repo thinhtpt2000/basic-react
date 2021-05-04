@@ -6,54 +6,65 @@ import TaskList from "./components/TaskList";
 import { findIndex, filter } from "lodash";
 
 function App() {
-  const [tasks, setTasks] = useState([]); // {id: unique, name, status}
-  const [isDisplayForm, setIsDisplayForm] = useState(false);
-  const [updatingTask, setUpdatingTask] = useState(null);
-  const [filters, setFilters] = useState({
-    name: "",
-    status: 2
+  const [state, setState] = useState({
+    tasks: [],
+    isDisplayForm: false,
+    updatingTask: {},
+    filters: {
+      name: "",
+      status: 2
+    },
+    filterTasks: []
   });
-  const [filterTasks, setFilterTasks] = useState([]);
 
   useEffect(() => {
     if (localStorage && localStorage.getItem('tasks')) {
-      let tmpTasks = JSON.parse(localStorage.getItem('tasks'));
-      setTasks(tmpTasks);
-      setFilterTasks(tmpTasks);
+      let newTasks = JSON.parse(localStorage.getItem('tasks'));
+      setState(prevState => ({
+        ...prevState,
+        tasks: [...newTasks],
+        filterTasks: [...newTasks]
+      }));
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (tasks) {
+    if (state.tasks) {
       onFilter();
     }
-  }, [tasks]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [state.tasks]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const randomId = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 
   const generateId = () => randomId() + '-' + randomId() + '-' + randomId() + '-' + randomId();
 
   const onToggleForm = () => {
-    setIsDisplayForm(true);
-    setUpdatingTask(null);
+    setState(prevState => ({
+      ...prevState,
+      isDisplayForm: true,
+      updatingTask: null
+    }));
   }
 
   const onCloseForm = () => {
-    setIsDisplayForm(false);
-    setUpdatingTask(null);
+    setState(prevState => ({
+      ...prevState,
+      isDisplayForm: false,
+      updatingTask: null
+    }));
   }
 
   const onSubmitData = (data) => {
-    let tmpTasks = [];
+    let newTasks = [];
     if (data.id === "") {
-      tmpTasks = tasks;
-      tmpTasks.push({
+      newTasks = state.tasks;
+      newTasks.push({
         id: generateId(),
         name: data.txtName,
         status: data.sltStatus
       });
     } else {
-      tmpTasks = tasks.map((task) => {
+      newTasks = state.tasks.map((task) => {
         if (task.id === data.id) {
           task.name = data.txtName;
           task.status = data.sltStatus;
@@ -61,45 +72,60 @@ function App() {
         return task;
       });
     }
-    setTasks([...tmpTasks]);
-    localStorage.setItem('tasks', JSON.stringify(tmpTasks));
+    setState(prevState => ({
+      ...prevState,
+      tasks: [...newTasks]
+    }));
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
   const onUpdateStatus = (id) => {
-    let newTasks = tasks;
+    let newTasks = state.tasks;
     let index = findIndex(newTasks, (task) => task.id === id);
     if (index !== -1) {
       newTasks[index].status = !newTasks[index].status;
     }
-    setTasks([...newTasks]);
+    setState(prevState => ({
+      ...prevState,
+      tasks: [...newTasks]
+    }));
     localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
   const onDeleteTask = (id) => {
-    let newTasks = tasks.filter((task) => {
+    let newTasks = state.tasks.filter((task) => {
       return task.id !== id;
     });
-    setTasks(newTasks);
+    setState(prevState => ({
+      ...prevState,
+      tasks: [...newTasks]
+    }));
     localStorage.setItem('tasks', JSON.stringify(newTasks));
     onCloseForm();
   }
 
   const onUpdateTask = (id) => {
-    let tmpTask = tasks.filter((task) => {
+    let tmpTask = state.tasks.filter((task) => {
       return task.id === id;
     })[0];
-    setUpdatingTask(tmpTask);
+    setState(prevState => ({
+      ...prevState,
+      updatingTask: tmpTask
+    }));
     onShowForm();
   }
 
   const onShowForm = () => {
-    setIsDisplayForm(true);
+    setState(prevState => ({
+      ...prevState,
+      isDisplayForm: true
+    }));
   }
 
   const onFilter = (filterName, filterStatus) => {
-    filterStatus = parseInt(filterStatus || filters.status);
-    filterName = (filterName === undefined ? filters.name : filterName).toLowerCase();
-    let newTasks = tasks;
+    filterStatus = parseInt(filterStatus || state.filters.status);
+    filterName = (filterName === undefined ? state.filters.name : filterName).toLowerCase();
+    let newTasks = state.tasks;
     if (filterName !== "") {
       newTasks = filter(newTasks, (task) => task.name.toLowerCase().indexOf(filterName) !== -1);
     }
@@ -108,24 +134,30 @@ function App() {
       || (filterStatus === 1 && task.status)
       || (filterStatus === 0 && !task.status)
     );
-    setFilterTasks([...newTasks]);
-    setFilters({
-      name: filterName,
-      status: filterStatus
-    });
+    setState(prevState => ({
+      ...prevState,
+      filterTasks: [...newTasks],
+      filters: {
+        name: filterName,
+        status: filterStatus
+      }
+    }));
   }
 
   const onSearch = (value) => {
+    let newTasks = state.tasks;
     if (value !== "") {
-      let newTasks = tasks.filter((task) => task.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
-      setFilterTasks(newTasks);
-    } else {
-      setFilterTasks(tasks);
+      newTasks = newTasks.filter((task) => task.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
     }
+    setState(prevState => ({
+      ...prevState,
+      ...state,
+      filterTasks: [...newTasks]
+    }));
   }
 
   const onSort = (sortBy, sortValue) => {
-    let newTasks = filterTasks;
+    let newTasks = state.filterTasks;
     if (sortBy === 'name') {
       newTasks.sort((a, b) => {
         if (a.name > b.name) {
@@ -147,7 +179,10 @@ function App() {
         }
       });
     }
-    setFilterTasks([...newTasks]);
+    setState(prevState => ({
+      ...prevState,
+      filterTasks: [...newTasks]
+    }));
   }
 
   return (
@@ -161,16 +196,16 @@ function App() {
         </div>
         <div className="row">
           {
-            isDisplayForm &&
+            state.isDisplayForm &&
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
               <TaskForm
                 handleCloseForm={onCloseForm}
                 handleSubmitForm={onSubmitData}
-                data={updatingTask}
+                data={state.updatingTask}
               />
             </div>
           }
-          <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
+          <div className={state.isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <button type="button" className="btn btn-primary mt-2" onClick={() => onToggleForm()}>
@@ -191,7 +226,7 @@ function App() {
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskList
-                  data={filterTasks}
+                  data={state.filterTasks}
                   handleUpdateStatus={onUpdateStatus}
                   handleDeleteTask={onDeleteTask}
                   handleClickUpdate={onUpdateTask}
