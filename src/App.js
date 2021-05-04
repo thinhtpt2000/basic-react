@@ -4,6 +4,7 @@ import TaskForm from "./components/TaskForm";
 import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
 import { findIndex, filter } from "lodash";
+import demo from './training/demo';
 
 function App() {
   const [tasks, setTasks] = useState([]); // {id: unique, name, status}
