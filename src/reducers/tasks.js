@@ -36,7 +36,10 @@ let myReducer = (state = initialState, action) => {
         case types.UPDATE_STATUS:
             let index = findIndex(state, action.payload);
             if (index !== -1) {
-                state[index].status = !state[index].status;
+                state[index] = {
+                    ...state[index],
+                    status: !state[index].status
+                };
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
             return [...state];
