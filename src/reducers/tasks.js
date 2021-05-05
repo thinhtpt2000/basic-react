@@ -25,16 +25,18 @@ const findIndex = (tasks, id) => {
 }
 
 let myReducer = (state = initialState, action) => {
+    let index = -1;
+    let task = null;
     switch (action.type) {
         case types.LIST_ALL:
             return [...state];
         case types.ADD_TASK:
-            let task = mapPayloadToTask(action.payload);
+            task = mapPayloadToTask(action.payload);
             state.push(task);
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
         case types.UPDATE_STATUS:
-            var index = findIndex(state, action.payload);
+            index = findIndex(state, action.payload);
             if (index !== -1) {
                 state[index] = {
                     ...state[index],
@@ -44,7 +46,7 @@ let myReducer = (state = initialState, action) => {
             }
             return [...state];
         case types.DELETE_TASK:
-            var index = findIndex(state, action.payload);
+            index = findIndex(state, action.payload);
             if (index !== -1) {
                 state.splice(index, 1);
                 localStorage.setItem('tasks', JSON.stringify(state));
