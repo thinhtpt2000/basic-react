@@ -18,9 +18,13 @@ let myReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.SELECT_TASK:
             return mapPayloadToFormTask(action.payload);
-        case types.UPDATE_FORM:
-            return action.payload;
         case types.CLEAR_FORM:
+            state = {
+                ...initialState,
+                id: state.id
+            }
+            return state;
+        case types.NEW_FORM:
             return initialState;
         default:
             return state;

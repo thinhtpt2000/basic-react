@@ -7,5 +7,5 @@ export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const DELETE_TASK = 'DELETE_TASK';
 export const SELECT_TASK = 'SELECT_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
-export const UPDATE_FORM = 'UPDATE_FORM';
 export const CLEAR_FORM = 'CLEAR_FORM';
+export const NEW_FORM = 'NEW_FORM';

@@ -59,15 +59,14 @@ export const selectTask = (task) => {
     }
 }
 
-export const updateForm = (task) => {
-    return {
-        type: types.UPDATE_FORM,
-        payload: task
-    }
-}
-
 export const clearForm = () => {
     return {
         type: types.CLEAR_FORM
+    }
+}
+
+export const newForm = () => {
+    return {
+        type: types.NEW_FORM
     }
 }

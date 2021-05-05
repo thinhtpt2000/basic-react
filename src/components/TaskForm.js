@@ -1,27 +1,34 @@
 import "./TaskForm.css";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addTask, closeForm, updateTask, updateForm, clearForm } from "./../actions/index";
+import { addTask, closeForm, updateTask, clearForm } from "./../actions/index";
 
 function TaskForm(props) {
-    const { isDisplayForm, selectedTask } = props;
+    const { isDisplayForm } = props;
+    const [task, setTasks] = useState(null);
+
+    useEffect(() => {
+        setTasks({
+            ...props.selectedTask
+        });
+    }, [props.selectedTask]);
 
     const onChangeData = (event) => {
         let target = event.target;
         let name = target.name;
         let value = target.value;
-        let payload = {
-            ...selectedTask,
+        setTasks({
+            ...task,
             [name]: value
-        }
-        props.updateForm(payload);
+        });
     }
 
     const onSubmitForm = (event) => {
         event.preventDefault();
-        if (selectedTask.id !== "") {
-            props.updateTask(selectedTask);
+        if (task.id !== "") {
+            props.updateTask(task);
         } else {
-            props.addTask(selectedTask);
+            props.addTask(task);
         }
         onClearForm();
         onCloseForm();
@@ -43,7 +50,7 @@ function TaskForm(props) {
                         <div className="card">
                             <div className="card-header bg-dark text-light font-weight-bold">
                                 <div className="row">
-                                    <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">{selectedTask.id !== "" ? "Update" : "Add"} new task</div>
+                                    <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">{task.id !== "" ? "Update" : "Add"} new task</div>
                                     <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
                                         <i className="fas fa-times-circle btn-close" onClick={() => onCloseForm()}></i>
                                     </div>
@@ -58,7 +65,7 @@ function TaskForm(props) {
                                             className="form-control"
                                             id="txtName"
                                             name="txtName"
-                                            value={selectedTask.txtName}
+                                            value={task.txtName}
                                             onChange={onChangeData}
                                         />
                                     </div>
@@ -68,7 +75,7 @@ function TaskForm(props) {
                                             className="form-control"
                                             id="sltStatus"
                                             name="sltStatus"
-                                            value={selectedTask.sltStatus}
+                                            value={task.sltStatus}
                                             onChange={onChangeData}
                                         >
                                             <option value="1">Active</option>
@@ -108,9 +115,6 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         closeForm: () => {
             dispatch(closeForm());
-        },
-        updateForm: (task) => {
-            dispatch(updateForm(task));
         },
         clearForm: () => {
             dispatch(clearForm());

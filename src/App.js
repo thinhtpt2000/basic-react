@@ -5,7 +5,7 @@ import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
 import { findIndex, filter } from "lodash";
 import { connect } from "react-redux";
-import { openForm, clearForm } from "./actions/index";
+import { openForm, newForm } from "./actions/index";
 
 function App(props) {
   const [state, setState] = useState({
@@ -20,7 +20,7 @@ function App(props) {
 
   const onShowForm = () => {
     props.openForm();
-    props.clearForm();
+    props.newForm();
   }
   const onFilter = (filterName, filterStatus) => {
     // filterStatus = parseInt(filterStatus || state.filters.status);
@@ -141,8 +141,8 @@ const mapDispatchToProps = (dispatch, props) => {
     openForm: () => {
       dispatch(openForm());
     },
-    clearForm: () => {
-      dispatch(clearForm());
+    newForm: () => {
+      dispatch(newForm());
     }
   }
 }
