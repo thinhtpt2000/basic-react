@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { updateStatus, deleteTask, closeForm } from "./../actions/index";
+import { updateStatus, deleteTask, closeForm, openForm, selectTask, clearForm } from "./../actions/index";
 
 function TaskItem(props) {
     let { data, order } = props;
@@ -8,13 +8,15 @@ function TaskItem(props) {
         props.updateStatus(props.data.id);
     }
 
-    const onDeleteTask = () => {
+    const onClickDelete = () => {
         props.deleteTask(props.data.id);
         props.closeForm();
+        props.clearForm();
     }
 
     const onClickUpdate = () => {
-        props.handleClickUpdate(props.data.id);
+        props.selectTask(props.data);
+        props.openForm();
     }
 
     return (
@@ -34,7 +36,7 @@ function TaskItem(props) {
                     &nbsp;
                     Edit
                 </button>
-                <button type="button" className="btn btn-danger mx-2 my-1" onClick={() => onDeleteTask()}>
+                <button type="button" className="btn btn-danger mx-2 my-1" onClick={() => onClickDelete()}>
                     <i className="fas fa-trash-alt"></i>
                     &nbsp;
                     Delete
@@ -58,6 +60,15 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         closeForm: () => {
             dispatch(closeForm());
+        },
+        openForm: () => {
+            dispatch(openForm());
+        },
+        selectTask: (task) => {
+            dispatch(selectTask(task));
+        },
+        clearForm: () => {
+            dispatch(clearForm());
         }
     }
 }

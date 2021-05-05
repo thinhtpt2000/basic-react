@@ -44,3 +44,30 @@ export const deleteTask = (id) => {
         payload: id
     }
 }
+
+export const updateTask = (task) => {
+    return {
+        type: types.UPDATE_TASK,
+        payload: task
+    }
+}
+
+export const selectTask = (task) => {
+    return {
+        type: types.SELECT_TASK,
+        payload: task
+    }
+}
+
+export const updateForm = (task) => {
+    return {
+        type: types.UPDATE_FORM,
+        payload: task
+    }
+}
+
+export const clearForm = () => {
+    return {
+        type: types.CLEAR_FORM
+    }
+}

@@ -5,11 +5,10 @@ import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
 import { findIndex, filter } from "lodash";
 import { connect } from "react-redux";
-import { toggleForm, openForm } from "./actions/index";
+import { openForm, clearForm } from "./actions/index";
 
 function App(props) {
   const [state, setState] = useState({
-    updatingTask: {},
     filters: {
       name: "",
       status: 2
@@ -19,50 +18,10 @@ function App(props) {
 
   let { isDisplayForm } = props;
 
-  const onToggleForm = () => {
-    props.onToggleForm();
-  }
-
-  const onSubmitData = (data) => {
-    // let newTasks = [];
-    // if (data.id === "") {
-    // newTasks = state.tasks;
-    //   newTasks.push({
-    //     id: generateId(),
-    //     name: data.txtName,
-    //     status: data.sltStatus
-    //   });
-    // } else {
-    // newTasks = state.tasks.map((task) => {
-    //   if (task.id === data.id) {
-    //     task.name = data.txtName;
-    //     task.status = data.sltStatus;
-    //   }
-    //   return task;
-    // });
-    // }
-    // setState(prevState => ({
-    //   ...prevState,
-    // tasks: [...newTasks]
-    // }));
-    // localStorage.setItem('tasks', JSON.stringify(newTasks));
-  }
-
-  const onUpdateTask = (id) => {
-    // let tmpTask = state.tasks.filter((task) => {
-    //   return task.id === id;
-    // })[0];
-    // setState(prevState => ({
-    //   ...prevState,
-    //   updatingTask: tmpTask
-    // }));
-    onShowForm();
-  }
-
   const onShowForm = () => {
-    props.onShowForm();
+    props.openForm();
+    props.clearForm();
   }
-
   const onFilter = (filterName, filterStatus) => {
     // filterStatus = parseInt(filterStatus || state.filters.status);
     // filterName = (filterName === undefined ? state.filters.name : filterName).toLowerCase();
@@ -136,18 +95,13 @@ function App(props) {
           </div>
         </div>
         <div className="row">
-          {
-            isDisplayForm &&
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-              <TaskForm
-                data={state.updatingTask}
-              />
+              <TaskForm />
             </div>
-          }
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <button type="button" className="btn btn-primary mt-2" onClick={() => onToggleForm()}>
+                <button type="button" className="btn btn-primary mt-2" onClick={() => onShowForm()}>
                   <i className="fas fa-plus"></i>
                   &nbsp;
                   Add new task
@@ -165,7 +119,6 @@ function App(props) {
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskList
-                  handleClickUpdate={onUpdateTask}
                   handleFilter={onFilter}
                 />
               </div>
@@ -185,11 +138,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onToggleForm: () => {
-      dispatch(toggleForm());
-    },
-    onShowForm: () => {
+    openForm: () => {
       dispatch(openForm());
+    },
+    clearForm: () => {
+      dispatch(clearForm());
     }
   }
 }
