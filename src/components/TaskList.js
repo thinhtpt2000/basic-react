@@ -1,5 +1,6 @@
 import TaskItem from "./TaskItem";
 import { useState } from "react";
+import { connect } from "react-redux";
 
 function TaskList(props) {
     const [filters, setFilters] = useState({
@@ -76,4 +77,10 @@ function TaskList(props) {
     )
 }
 
-export default TaskList;
+const mapStateToProps = (state) => {
+    return {
+        data: state.tasks
+    }
+};
+
+export default connect(mapStateToProps, null)(TaskList);

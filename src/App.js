@@ -226,7 +226,6 @@ function App() {
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskList
-                  data={state.filterTasks}
                   handleUpdateStatus={onUpdateStatus}
                   handleDeleteTask={onDeleteTask}
                   handleClickUpdate={onUpdateTask}
