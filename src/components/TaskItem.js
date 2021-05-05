@@ -10,6 +10,7 @@ function TaskItem(props) {
 
     const onDeleteTask = () => {
         props.deleteTask(props.data.id);
+        props.closeForm();
     }
 
     const onClickUpdate = () => {
@@ -54,6 +55,8 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         deleteTask: (id) => {
             dispatch(deleteTask(id));
+        },
+        closeForm: () => {
             dispatch(closeForm());
         }
     }
