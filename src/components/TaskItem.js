@@ -1,8 +1,11 @@
+import { connect } from "react-redux";
+import { updateStatus } from "./../actions/index";
+
 function TaskItem(props) {
     let { data, order } = props;
 
     const onUpdateStatus = () => {
-        props.handleUpdateStatus(props.data.id);
+        props.updateStatus(props.data.id);
     }
 
     const onDeleteTask = () => {
@@ -40,4 +43,16 @@ function TaskItem(props) {
     )
 }
 
-export default TaskItem;
+const mapStateToProps = state => {
+    return {};
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        updateStatus: (id) => {
+            dispatch(updateStatus(id));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItem);

@@ -65,7 +65,6 @@ function TaskList(props) {
                                 key={task.id}
                                 order={index + 1}
                                 data={task}
-                                handleUpdateStatus={props.handleUpdateStatus}
                                 handleDeleteTask={props.handleDeleteTask}
                                 handleClickUpdate={props.handleClickUpdate}
                             />

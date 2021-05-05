@@ -13,6 +13,17 @@ const mapPayloadToTask = (payload) => {
     }
 }
 
+const findIndex = (tasks, id) => {
+    let index = -1;
+    (tasks || []).forEach((task, idx) => {
+        if (task.id === id) {
+            index = idx;
+            return;
+        }
+    });
+    return index;
+}
+
 let myReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LIST_ALL:
@@ -21,7 +32,14 @@ let myReducer = (state = initialState, action) => {
             let task = mapPayloadToTask(action.payload);
             state.push(task);
             localStorage.setItem('tasks', JSON.stringify(state));
-            return [...state]; 
+            return [...state];
+        case types.UPDATE_STATUS:
+            let index = findIndex(state, action.payload);
+            if (index !== -1) {
+                state[index].status = !state[index].status;
+                localStorage.setItem('tasks', JSON.stringify(state));
+            }
+            return [...state];
         default:
             return [...state];
     }

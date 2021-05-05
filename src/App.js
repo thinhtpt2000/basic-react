@@ -48,19 +48,6 @@ function App(props) {
     // localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
-  const onUpdateStatus = (id) => {
-    // let newTasks = state.tasks;
-    // let index = findIndex(newTasks, (task) => task.id === id);
-    // if (index !== -1) {
-    //   newTasks[index].status = !newTasks[index].status;
-    // }
-    // setState(prevState => ({
-    //   ...prevState,
-    // tasks: [...newTasks]
-    // }));
-    // localStorage.setItem('tasks', JSON.stringify(newTasks));
-  }
-
   const onDeleteTask = (id) => {
     // let newTasks = state.tasks.filter((task) => {
     //   return task.id !== id;
@@ -190,7 +177,6 @@ function App(props) {
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskList
-                  handleUpdateStatus={onUpdateStatus}
                   handleDeleteTask={onDeleteTask}
                   handleClickUpdate={onUpdateTask}
                   handleFilter={onFilter}
