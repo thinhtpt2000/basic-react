@@ -34,12 +34,19 @@ let myReducer = (state = initialState, action) => {
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
         case types.UPDATE_STATUS:
-            let index = findIndex(state, action.payload);
+            var index = findIndex(state, action.payload);
             if (index !== -1) {
                 state[index] = {
                     ...state[index],
                     status: !state[index].status
                 };
+                localStorage.setItem('tasks', JSON.stringify(state));
+            }
+            return [...state];
+        case types.DELETE_TASK:
+            var index = findIndex(state, action.payload);
+            if (index !== -1) {
+                state.splice(index, 1);
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
             return [...state];

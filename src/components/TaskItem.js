@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { updateStatus } from "./../actions/index";
+import { updateStatus, deleteTask, closeForm } from "./../actions/index";
 
 function TaskItem(props) {
     let { data, order } = props;
@@ -9,7 +9,7 @@ function TaskItem(props) {
     }
 
     const onDeleteTask = () => {
-        props.handleDeleteTask(props.data.id);
+        props.deleteTask(props.data.id);
     }
 
     const onClickUpdate = () => {
@@ -51,6 +51,10 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         updateStatus: (id) => {
             dispatch(updateStatus(id));
+        },
+        deleteTask: (id) => {
+            dispatch(deleteTask(id));
+            dispatch(closeForm());
         }
     }
 }

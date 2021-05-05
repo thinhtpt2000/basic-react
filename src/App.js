@@ -48,18 +48,6 @@ function App(props) {
     // localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
-  const onDeleteTask = (id) => {
-    // let newTasks = state.tasks.filter((task) => {
-    //   return task.id !== id;
-    // });
-    // setState(prevState => ({
-    //   ...prevState,
-    //   tasks: [...newTasks]
-    // }));
-    // localStorage.setItem('tasks', JSON.stringify(newTasks));
-    // onCloseForm();
-  }
-
   const onUpdateTask = (id) => {
     // let tmpTask = state.tasks.filter((task) => {
     //   return task.id === id;
@@ -177,7 +165,6 @@ function App(props) {
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskList
-                  handleDeleteTask={onDeleteTask}
                   handleClickUpdate={onUpdateTask}
                   handleFilter={onFilter}
                 />

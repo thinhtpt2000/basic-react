@@ -37,3 +37,10 @@ export const updateStatus = (id) => {
         payload: id
     }
 }
+
+export const deleteTask = (id) => {
+    return {
+        type: types.DELETE_TASK,
+        payload: id
+    }
+}
