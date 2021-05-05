@@ -1,5 +1,7 @@
 import "./TaskForm.css";
 import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { addTask } from "./../actions/index";
 
 function TaskForm(props) {
     const [data, setData] = useState({
@@ -34,9 +36,7 @@ function TaskForm(props) {
 
     const onSubmitForm = (event) => {
         event.preventDefault();
-        let submitData = data;
-        submitData.sltStatus = submitData.sltStatus === "1";
-        props.handleSubmitForm(submitData);
+        props.onAddTask(data);
         onClearForm();
         props.handleCloseForm();
     }
@@ -103,4 +103,18 @@ function TaskForm(props) {
     );
 }
 
-export default TaskForm;
+const mapStateToProps = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onAddTask: (task) => {
+            dispatch(addTask(task));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
