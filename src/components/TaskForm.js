@@ -1,7 +1,7 @@
 import "./TaskForm.css";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addTask } from "./../actions/index";
+import { addTask, closeForm } from "./../actions/index";
 
 function TaskForm(props) {
     const [data, setData] = useState({
@@ -10,19 +10,19 @@ function TaskForm(props) {
         sltStatus: "1"
     });
 
-    useEffect(() => {
-        let updatingData = props.data;
-        updatingData = updatingData ? updatingData : {
-            id: "",
-            name: "",
-            status: true
-        };
-        setData({
-            id: updatingData.id,
-            txtName: updatingData.name,
-            sltStatus: updatingData.status ? "1" : "0"
-        });
-    }, [props.data]);
+    // useEffect(() => {
+    //     let updatingData = props.data;
+    //     updatingData = updatingData ? updatingData : {
+    //         id: "",
+    //         name: "",
+    //         status: true
+    //     };
+    //     setData({
+    //         id: updatingData.id,
+    //         txtName: updatingData.name,
+    //         sltStatus: updatingData.status ? "1" : "0"
+    //     });
+    // }, [props.data]);
 
     const onChangeData = (event) => {
         let target = event.target;
@@ -38,7 +38,7 @@ function TaskForm(props) {
         event.preventDefault();
         props.onAddTask(data);
         onClearForm();
-        props.handleCloseForm();
+        onCloseForm();
     }
 
     const onClearForm = () => {
@@ -49,6 +49,10 @@ function TaskForm(props) {
         });
     }
 
+    const onCloseForm = () => {
+        props.onCloseForm();
+    }
+
     return (
         <div className="TaskForm">
             <div className="card">
@@ -56,7 +60,7 @@ function TaskForm(props) {
                     <div className="row">
                         <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">{data.id !== "" ? "Update" : "Add"} new task</div>
                         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
-                            <i className="fas fa-times-circle btn-close" onClick={() => props.handleCloseForm()}></i>
+                            <i className="fas fa-times-circle btn-close" onClick={() => onCloseForm()}></i>
                         </div>
                     </div>
                 </div>
@@ -113,6 +117,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddTask: (task) => {
             dispatch(addTask(task));
+        },
+        onCloseForm: () => {
+            dispatch(closeForm());
         }
     }
 }

@@ -4,10 +4,11 @@ import TaskForm from "./components/TaskForm";
 import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
 import { findIndex, filter } from "lodash";
+import { connect } from "react-redux";
+import { toggleForm, openForm } from "./actions/index";
 
-function App() {
+function App(props) {
   const [state, setState] = useState({
-    isDisplayForm: false,
     updatingTask: {},
     filters: {
       name: "",
@@ -16,43 +17,33 @@ function App() {
     filterTasks: []
   });
 
-  const onToggleForm = () => {
-    setState(prevState => ({
-      ...prevState,
-      isDisplayForm: true,
-      updatingTask: null
-    }));
-  }
+  let { isDisplayForm } = props;
 
-  const onCloseForm = () => {
-    setState(prevState => ({
-      ...prevState,
-      isDisplayForm: false,
-      updatingTask: null
-    }));
+  const onToggleForm = () => {
+    props.onToggleForm();
   }
 
   const onSubmitData = (data) => {
     // let newTasks = [];
     // if (data.id === "") {
-      // newTasks = state.tasks;
+    // newTasks = state.tasks;
     //   newTasks.push({
     //     id: generateId(),
     //     name: data.txtName,
     //     status: data.sltStatus
     //   });
     // } else {
-      // newTasks = state.tasks.map((task) => {
-      //   if (task.id === data.id) {
-      //     task.name = data.txtName;
-      //     task.status = data.sltStatus;
-      //   }
-      //   return task;
-      // });
+    // newTasks = state.tasks.map((task) => {
+    //   if (task.id === data.id) {
+    //     task.name = data.txtName;
+    //     task.status = data.sltStatus;
+    //   }
+    //   return task;
+    // });
     // }
     // setState(prevState => ({
     //   ...prevState,
-      // tasks: [...newTasks]
+    // tasks: [...newTasks]
     // }));
     // localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
@@ -65,7 +56,7 @@ function App() {
     // }
     // setState(prevState => ({
     //   ...prevState,
-      // tasks: [...newTasks]
+    // tasks: [...newTasks]
     // }));
     // localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
@@ -90,14 +81,11 @@ function App() {
     //   ...prevState,
     //   updatingTask: tmpTask
     // }));
-    // onShowForm();
+    onShowForm();
   }
 
   const onShowForm = () => {
-    setState(prevState => ({
-      ...prevState,
-      isDisplayForm: true
-    }));
+    props.onShowForm();
   }
 
   const onFilter = (filterName, filterStatus) => {
@@ -123,44 +111,44 @@ function App() {
   }
 
   const onSearch = (value) => {
-  //   let newTasks = state.tasks;
-  //   if (value !== "") {
-  //     newTasks = newTasks.filter((task) => task.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
-  //   }
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     ...state,
-  //     filterTasks: [...newTasks]
-  //   }));
+    //   let newTasks = state.tasks;
+    //   if (value !== "") {
+    //     newTasks = newTasks.filter((task) => task.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    //   }
+    //   setState(prevState => ({
+    //     ...prevState,
+    //     ...state,
+    //     filterTasks: [...newTasks]
+    //   }));
   }
 
   const onSort = (sortBy, sortValue) => {
-  //   let newTasks = state.filterTasks;
-  //   if (sortBy === 'name') {
-  //     newTasks.sort((a, b) => {
-  //       if (a.name > b.name) {
-  //         return sortValue;
-  //       } else if (a.name < b.name) {
-  //         return -sortValue;
-  //       } else {
-  //         return 0;
-  //       }
-  //     });
-  //   } else {
-  //     newTasks.sort((a, b) => {
-  //       if (a.status > b.status) {
-  //         return -sortValue;
-  //       } else if (a.status < b.status) {
-  //         return sortValue;
-  //       } else {
-  //         return 0;
-  //       }
-  //     });
-  //   }
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     filterTasks: [...newTasks]
-  //   }));
+    //   let newTasks = state.filterTasks;
+    //   if (sortBy === 'name') {
+    //     newTasks.sort((a, b) => {
+    //       if (a.name > b.name) {
+    //         return sortValue;
+    //       } else if (a.name < b.name) {
+    //         return -sortValue;
+    //       } else {
+    //         return 0;
+    //       }
+    //     });
+    //   } else {
+    //     newTasks.sort((a, b) => {
+    //       if (a.status > b.status) {
+    //         return -sortValue;
+    //       } else if (a.status < b.status) {
+    //         return sortValue;
+    //       } else {
+    //         return 0;
+    //       }
+    //     });
+    //   }
+    //   setState(prevState => ({
+    //     ...prevState,
+    //     filterTasks: [...newTasks]
+    //   }));
   }
 
   return (
@@ -174,16 +162,14 @@ function App() {
         </div>
         <div className="row">
           {
-            state.isDisplayForm &&
+            isDisplayForm &&
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
               <TaskForm
-                handleCloseForm={onCloseForm}
-                handleSubmitForm={onSubmitData}
                 data={state.updatingTask}
               />
             </div>
           }
-          <div className={state.isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
+          <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <button type="button" className="btn btn-primary mt-2" onClick={() => onToggleForm()}>
@@ -218,4 +204,21 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isDisplayForm: state.isDisplayForm
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onToggleForm: () => {
+      dispatch(toggleForm());
+    },
+    onShowForm: () => {
+      dispatch(openForm());
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
