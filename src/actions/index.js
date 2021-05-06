@@ -77,3 +77,10 @@ export const filterTask = (filters) => {
         payload: filters
     }
 }
+
+export const searchTask = (keyword) => {
+    return {
+        type: types.SEARCH_TASK,
+        payload: keyword
+    }
+}

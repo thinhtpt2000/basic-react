@@ -10,3 +10,4 @@ export const UPDATE_TASK = 'UPDATE_TASK';
 export const CLEAR_FORM = 'CLEAR_FORM';
 export const NEW_FORM = 'NEW_FORM';
 export const FILTER_TASK = 'FILTER_TASK';
+export const SEARCH_TASK = 'SEARCH_TASK';

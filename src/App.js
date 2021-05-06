@@ -13,18 +13,6 @@ function App(props) {
     props.newForm();
   }
 
-  const onSearch = (value) => {
-    //   let newTasks = state.tasks;
-    //   if (value !== "") {
-    //     newTasks = newTasks.filter((task) => task.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
-    //   }
-    //   setState(prevState => ({
-    //     ...prevState,
-    //     ...state,
-    //     filterTasks: [...newTasks]
-    //   }));
-  }
-
   const onSort = (sortBy, sortValue) => {
     //   let newTasks = state.filterTasks;
     //   if (sortBy === 'name') {
@@ -64,9 +52,9 @@ function App(props) {
           </div>
         </div>
         <div className="row">
-            <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-              <TaskForm />
-            </div>
+          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <TaskForm />
+          </div>
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -80,7 +68,6 @@ function App(props) {
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskControl
-                  handleSearch={onSearch}
                   handleSort={onSort}
                 />
               </div>

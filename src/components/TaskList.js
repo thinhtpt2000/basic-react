@@ -8,9 +8,9 @@ function TaskList(props) {
         filterName: "",
         filterStatus: 2
     });
-    const [filterData, setFilterData] = useState([]);
+    const [displayData, setDisplayData] = useState([]);
 
-    let { filterValues } = props;
+    let { filterValues, searchValue } = props;
 
     useEffect(() => {
         let { data } = props;
@@ -22,8 +22,12 @@ function TaskList(props) {
             || (filterValues.status === 1 && task.status)
             || (filterValues.status === 0 && !task.status)
         );
-        setFilterData([...data]);
-    }, [filterValues, props]);
+
+        if (searchValue !== "") {
+            data = data.filter((task) => task.name.toLowerCase().indexOf(searchValue) !== -1);
+        }
+        setDisplayData([...data]);
+    }, [filterValues, searchValue, props]);
 
     const onFilterChange = (event) => {
         let target = event.target;
@@ -77,7 +81,7 @@ function TaskList(props) {
                         <td></td>
                     </tr>
                     {
-                        filterData.map((task, index) => {
+                        displayData.map((task, index) => {
                             return <TaskItem
                                 key={task.id}
                                 order={index + 1}
@@ -94,7 +98,8 @@ function TaskList(props) {
 const mapStateToProps = (state) => {
     return {
         data: state.tasks,
-        filterValues: state.filterTask
+        filterValues: state.filterTask,
+        searchValue: state.searchTask
     }
 };
 

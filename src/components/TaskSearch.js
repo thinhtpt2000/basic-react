@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { connect } from "react-redux";
+import { searchTask } from "./../actions/index";
 
 function TaskSearch(props) {
     const [keyword, setKeyword] = useState("");
@@ -10,7 +12,7 @@ function TaskSearch(props) {
 
     const onSearch = (event) => {
         event.preventDefault();
-        props.handleSearch(keyword);
+        props.searchTask(keyword);
     }
 
     return (
@@ -46,4 +48,16 @@ function TaskSearch(props) {
     )
 }
 
-export default TaskSearch;
+const mapStateToProps = (state) => {
+    return {};
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        searchTask: (keyword) => {
+            dispatch(searchTask(keyword));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskSearch);
