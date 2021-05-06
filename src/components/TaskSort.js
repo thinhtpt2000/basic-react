@@ -5,10 +5,7 @@ import { connect } from "react-redux";
 import { sortTask } from "./../actions/index";
 
 function TaskSort(props) {
-    const [sort, setSort] = useState({
-        by: "",
-        value: 0
-    });
+    const [sort, setSort] = useState(props.sortValues);
 
     const onClick = (event, sortBy, sortValue) => {
         event.preventDefault();
@@ -47,7 +44,9 @@ function TaskSort(props) {
 }
 
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        sortValues: state.sortTask
+    };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
