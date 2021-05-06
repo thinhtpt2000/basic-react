@@ -6,7 +6,7 @@ function TaskControl(props) {
         <div className="Toolbar">
             <div className="row mt-2">
                 <TaskSearch />
-                <TaskSort handleSort={props.handleSort} />
+                <TaskSort />
             </div>
         </div>
     );

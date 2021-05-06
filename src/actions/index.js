@@ -84,3 +84,10 @@ export const searchTask = (keyword) => {
         payload: keyword
     }
 }
+
+export const sortTask = (sort) => {
+    return {
+        type: types.SORT_TASK,
+        payload: sort
+    }
+}

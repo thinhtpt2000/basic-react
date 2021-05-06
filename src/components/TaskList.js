@@ -10,7 +10,7 @@ function TaskList(props) {
     });
     const [displayData, setDisplayData] = useState([]);
 
-    let { filterValues, searchValue } = props;
+    let { filterValues, searchValue, sortValues } = props;
 
     useEffect(() => {
         let { data } = props;
@@ -26,8 +26,30 @@ function TaskList(props) {
         if (searchValue !== "") {
             data = data.filter((task) => task.name.toLowerCase().indexOf(searchValue) !== -1);
         }
+
+        if (sortValues.by === 'name') {
+            data.sort((a, b) => {
+                if (a.name > b.name) {
+                    return sortValues.value;
+                } else if (a.name < b.name) {
+                    return -sortValues.value;
+                } else {
+                    return 0;
+                }
+            });
+        } else {
+            data.sort((a, b) => {
+                if (a.status > b.status) {
+                    return -sortValues.value;
+                } else if (a.status < b.status) {
+                    return sortValues.value;
+                } else {
+                    return 0;
+                }
+            });
+        }
         setDisplayData([...data]);
-    }, [filterValues, searchValue, props]);
+    }, [filterValues, searchValue, sortValues, props]);
 
     const onFilterChange = (event) => {
         let target = event.target;
@@ -99,7 +121,8 @@ const mapStateToProps = (state) => {
     return {
         data: state.tasks,
         filterValues: state.filterTask,
-        searchValue: state.searchTask
+        searchValue: state.searchTask,
+        sortValues: state.sortTask
     }
 };
 

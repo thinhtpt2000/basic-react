@@ -13,35 +13,6 @@ function App(props) {
     props.newForm();
   }
 
-  const onSort = (sortBy, sortValue) => {
-    //   let newTasks = state.filterTasks;
-    //   if (sortBy === 'name') {
-    //     newTasks.sort((a, b) => {
-    //       if (a.name > b.name) {
-    //         return sortValue;
-    //       } else if (a.name < b.name) {
-    //         return -sortValue;
-    //       } else {
-    //         return 0;
-    //       }
-    //     });
-    //   } else {
-    //     newTasks.sort((a, b) => {
-    //       if (a.status > b.status) {
-    //         return -sortValue;
-    //       } else if (a.status < b.status) {
-    //         return sortValue;
-    //       } else {
-    //         return 0;
-    //       }
-    //     });
-    //   }
-    //   setState(prevState => ({
-    //     ...prevState,
-    //     filterTasks: [...newTasks]
-    //   }));
-  }
-
   return (
     <div className="App">
       <div className="container">
@@ -67,9 +38,7 @@ function App(props) {
             </div>
             <div className="row mt-2">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TaskControl
-                  handleSort={onSort}
-                />
+                <TaskControl />
               </div>
             </div>
             <div className="row mt-2">

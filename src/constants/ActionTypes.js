@@ -11,3 +11,4 @@ export const CLEAR_FORM = 'CLEAR_FORM';
 export const NEW_FORM = 'NEW_FORM';
 export const FILTER_TASK = 'FILTER_TASK';
 export const SEARCH_TASK = 'SEARCH_TASK';
+export const SORT_TASK = 'SORT_TASK';
