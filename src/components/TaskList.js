@@ -68,10 +68,10 @@ function TaskList(props) {
             <table className="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" style={{width: "2.5rem"}}>#</th>
                         <th scope="col">Name</th>
-                        <th scope="col" className="text-center">Status</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" className="text-center" style={{width: "7rem"}}>Status</th>
+                        <th scope="col" style={{width: "7rem"}}>Action</th>
                     </tr>
                 </thead>
                 <tbody>
