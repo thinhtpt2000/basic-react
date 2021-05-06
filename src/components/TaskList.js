@@ -1,12 +1,29 @@
 import TaskItem from "./TaskItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { filterTask } from "./../actions/index";
 
 function TaskList(props) {
     const [filters, setFilters] = useState({
-        txtSearchTb: "",
-        sltStatus: 2
+        filterName: "",
+        filterStatus: 2
     });
+    const [filterData, setFilterData] = useState([]);
+
+    let { filterValues } = props;
+
+    useEffect(() => {
+        let { data } = props;
+        if (filterValues.name !== "") {
+            data = data.filter((task) => task.name.toLowerCase().indexOf(filterValues.name) !== -1);
+        }
+        data = data.filter((task) =>
+            filterValues.status === 2
+            || (filterValues.status === 1 && task.status)
+            || (filterValues.status === 0 && !task.status)
+        );
+        setFilterData([...data]);
+    }, [filterValues, props]);
 
     const onFilterChange = (event) => {
         let target = event.target;
@@ -17,7 +34,7 @@ function TaskList(props) {
             [name]: value
         }
         setFilters(tmpFilter);
-        props.handleFilter(tmpFilter.txtSearchTb, tmpFilter.sltStatus);
+        props.filterTask(tmpFilter);
     }
 
     return (
@@ -38,18 +55,18 @@ function TaskList(props) {
                             <input
                                 type="text"
                                 className="form-control"
-                                id="txtSearchTb"
-                                name="txtSearchTb"
-                                value={filters.txtSearchTb}
+                                id="filterName"
+                                name="filterName"
+                                value={filters.filterName}
                                 onChange={onFilterChange}
                             />
                         </td>
                         <td>
                             <select
                                 className="form-control"
-                                id="sltStatus"
-                                name="sltStatus"
-                                value={filters.sltStatus}
+                                id="filterStatus"
+                                name="filterStatus"
+                                value={filters.filterStatus}
                                 onChange={onFilterChange}
                             >
                                 <option value={2}>All</option>
@@ -60,7 +77,7 @@ function TaskList(props) {
                         <td></td>
                     </tr>
                     {
-                        props.data.map((task, index) => {
+                        filterData.map((task, index) => {
                             return <TaskItem
                                 key={task.id}
                                 order={index + 1}
@@ -76,8 +93,18 @@ function TaskList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        data: state.tasks
+        data: state.tasks,
+        filterValues: state.filterTask
     }
 };
 
-export default connect(mapStateToProps, null)(TaskList);
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        filterTask: (filter) => {
+            dispatch(filterTask(filter));
+        }
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);

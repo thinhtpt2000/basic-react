@@ -70,3 +70,10 @@ export const newForm = () => {
         type: types.NEW_FORM
     }
 }
+
+export const filterTask = (filters) => {
+    return {
+        type: types.FILTER_TASK,
+        payload: filters
+    }
+}
