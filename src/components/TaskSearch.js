@@ -16,7 +16,7 @@ function TaskSearch(props) {
     }
 
     return (
-        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
             <form>
                 <div className="form-row align-items-center">
                     <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">

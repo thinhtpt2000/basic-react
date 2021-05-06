@@ -23,16 +23,16 @@ function App(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+          <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <TaskForm />
           </div>
-          <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
+          <div className={isDisplayForm ? "col-xs-12 col-sm-12 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <button type="button" className="btn btn-primary mt-2" onClick={() => onShowForm()}>
                   <i className="fas fa-plus"></i>
                   &nbsp;
-                  Add new task
+                  Add task
                 </button>
               </div>
             </div>
