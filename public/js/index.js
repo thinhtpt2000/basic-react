@@ -7,6 +7,8 @@ $(document).ready(function() {
         }
     });
 
+    maxWidth = Math.round(maxWidth + 5);
+
     let style = document.createElement('style');
     $(style).append(`button {
         width: ${maxWidth}px

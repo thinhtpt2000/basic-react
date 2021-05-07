@@ -2,7 +2,7 @@ import * as types from "../constants/ActionTypes";
 
 let initialState = {
     by: "name",
-    value: 0
+    value: 1
 };
 
 let myReducer = (state = initialState, action) => {

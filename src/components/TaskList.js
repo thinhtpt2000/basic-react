@@ -70,7 +70,7 @@ function TaskList(props) {
                     <tr>
                         <th scope="col" style={{width: "2.5rem"}}>#</th>
                         <th scope="col">Name</th>
-                        <th scope="col" className="text-center" style={{width: "7rem"}}>Status</th>
+                        <th scope="col" className="text-center" style={{width: "8rem"}}>Status</th>
                         <th scope="col" style={{width: "7rem"}}>Action</th>
                     </tr>
                 </thead>
